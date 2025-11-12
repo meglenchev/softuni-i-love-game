@@ -9,3 +9,4 @@
 ## 2. Аdd Homepage And Router 
  - [x] Add Homepage
  - [x] Add Homepage Router
+ - [x] Add NaviLink (Dynamic Navigation) to App

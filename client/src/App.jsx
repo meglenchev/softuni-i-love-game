@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router"
+import { Routes, Route, NavLink } from "react-router"
 import { Home } from "./components/Home.jsx"
 
 export function App() {
@@ -6,17 +6,17 @@ export function App() {
     <>
       <header>
         <nav>
-          <a className="home" href="#"> <img src="./images/logo.png" alt="logo" /> </a>
-          <a href="#">Catalog</a>
+          <NavLink className={'home'} to="/"> <img src="/images/logo.png" alt="logo" /> </NavLink>
+          <NavLink to="/game/catalog">Catalog</NavLink>
 
           <div id="user">
-            <a href="#">Add Game</a>
-            <a href="#">Logout</a>
+            <NavLink to="/game/add">Add Game</NavLink>
+            <NavLink to="/logout">Logout</NavLink>
           </div>
 
           <div id="guest">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
+            <NavLink to="/user/login">Login</NavLink>
+            <NavLink to="/user/register">Register</NavLink>
           </div>
         </nav>
       </header>
