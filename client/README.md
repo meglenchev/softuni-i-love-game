@@ -2,3 +2,4 @@
 
 ## 1. Initialize Project 
  - [x] Add resources
+ - [x] Add Header / Footer
