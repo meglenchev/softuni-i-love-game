@@ -97,7 +97,7 @@
 #welcome-world .welcome-message {
     display: inline-block;
     z-index: 999;
-    margin: 0 auto;
+    margin: 0;
     left: 0;
     top: 40%;
     text-align: center;

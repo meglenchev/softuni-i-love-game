@@ -1,4 +1,25 @@
+import { useEffect, useState } from "react"
+import { endPoints } from "../utils/endpoints.js"
+import { ShortGameView } from "../games/ShortGameView.jsx";
+
 export function Home() {
+    const [sortedGames, setSortedGames] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await fetch(endPoints.gamesSortDesc);
+
+                const gamesData = await res.json();
+                const allGames = Object.entries(gamesData);
+                setSortedGames(allGames.slice(0, 3));
+
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        })();
+    }, [])
+
     return (
         <section id="welcome-world">
 
@@ -12,31 +33,16 @@ export function Home() {
                 <h1>Latest Games</h1>
                 <div id="latest-wrap">
                     <div className="home-container">
-                        <div className="game">
-                            <img src="./images/witcher.png" alt="Elden Ring" />
-                            <div className="details-overlay">
-                                <p className="name">The Witcher 3</p>
-                                <p className="genre">Open World</p>
-                                <button className="details-button">Details</button>
-                            </div>
-                        </div>
-                        <div className="game">
-                            <img src="./images/elden ring.png" alt="Elden Ring" />
-                            <div className="details-overlay">
-                                <p className="name">Elden Ring</p>
-                                <p className="genre">Action RPG</p>
-                                <button className="details-button">Details</button>
-                            </div>
-                        </div>
-                        <div className="game">
-                            <img src="./images/minecraft.png" alt="Minecraft" />
-                            <div className="details-overlay">
-                                <p className="name">Minecraft</p>
-                                <p className="genre">Sandbox</p>
-                                <button className="details-button">Details</button>
-                            </div>
-                        </div>
-                        <p className="no-articles">No games yet</p>
+                        {sortedGames.length > 0 ? 
+                        (sortedGames.map(game => <ShortGameView 
+                            key={game.at(0)} 
+                            id={game.at(0)}
+                            imageUrl={game.at(1).imageUrl}
+                            title={game.at(1).title}
+                            genre={game.at(1).genre}
+                        />)) 
+                        : <p className="no-articles">No games yet</p>}
+                        
                     </div>
                 </div>
             </div>
