@@ -1,4 +1,4 @@
-export function ShortGameView({
+export function ShortGame({
     id,
     imageUrl, 
     title, 
@@ -10,7 +10,7 @@ export function ShortGameView({
             <div className="details-overlay">
                 <p className="name">{title}</p>
                 <p className="genre">{genre}</p>
-                <button className="details-button">Details</button>
+                <a href="#" className="details-button">Details</a>
             </div>
         </div>
     )

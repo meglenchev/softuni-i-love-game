@@ -11,5 +11,12 @@
 
 ## 3. Аdd Homepage And Dynamic content 
  - [x] Add Homepage Router
- - [x] Add Homepage
+ - [x] Create Homepage Component
  - [x] Homepage Dynamic Content Functionality
+
+## 4. Аdd Games Catalog
+- [x] Create Game Catalog Component
+- [x] Catalog Dynamic Content Functionality
+
+## 5. Аdd Abort Controller
+- [x] Add Abort Controller To Fetch

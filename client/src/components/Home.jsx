@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react"
 import { endPoints } from "../utils/endpoints.js"
-import { ShortGameView } from "../games/ShortGameView.jsx";
+import { ShortGame } from "../games/ShortGame.jsx";
 
 export function Home() {
-    const [sortedGames, setSortedGames] = useState([]);
+    const [games, setdGames] = useState([]);
 
     useEffect(() => {
+        const abortController = new AbortController();
+
         (async () => {
             try {
-                const res = await fetch(endPoints.gamesSortDesc);
+                const res = await fetch(endPoints.allGames, {signal: abortController.signal});
 
                 const gamesData = await res.json();
                 const allGames = Object.entries(gamesData);
-                setSortedGames(allGames.slice(0, 3));
+                setdGames(allGames.slice(0, 3));
 
             } catch (err) {
                 throw new Error(err.message);
             }
         })();
+
+        return () => {
+            abortController.abort();
+        }
     }, [])
 
     return (
@@ -33,16 +39,16 @@ export function Home() {
                 <h1>Latest Games</h1>
                 <div id="latest-wrap">
                     <div className="home-container">
-                        {sortedGames.length > 0 ? 
-                        (sortedGames.map(game => <ShortGameView 
-                            key={game.at(0)} 
-                            id={game.at(0)}
-                            imageUrl={game.at(1).imageUrl}
-                            title={game.at(1).title}
-                            genre={game.at(1).genre}
-                        />)) 
-                        : <p className="no-articles">No games yet</p>}
-                        
+                        {games.length > 0 ?
+                            (games.map(game => <ShortGame
+                                key={game.at(0)}
+                                id={game.at(0)}
+                                imageUrl={game.at(1).imageUrl}
+                                title={game.at(1).title}
+                                genre={game.at(1).genre}
+                            />))
+                            : <p className="no-articles">No games yet</p>}
+
                     </div>
                 </div>
             </div>

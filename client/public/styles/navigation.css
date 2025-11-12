@@ -39,9 +39,12 @@ footer .center-text {
     font-size: 0.9em;
 }
 
+.home {
+    margin-right: auto;
+}
+
 .home  img{
 height: 9vh;
-margin-right: 20vw;
 }
 
 header {
@@ -66,10 +69,6 @@ header nav {
  display: flex;
  align-items: center;
  justify-content: start;
-}
-
-header nav>* {
-    float: left;
 }
 
 footer {

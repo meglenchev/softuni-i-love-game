@@ -1,5 +1,6 @@
 import { Routes, Route, NavLink } from "react-router"
 import { Home } from "./components/Home.jsx"
+import { GameCatalog } from "./games/GamesCatalog.jsx"
 
 export function App() {
   return (
@@ -11,7 +12,7 @@ export function App() {
 
           <div id="user">
             <NavLink to="/game/add">Add Game</NavLink>
-            <NavLink to="/logout">Logout</NavLink>
+            <NavLink to="/user/logout">Logout</NavLink>
           </div>
 
           <div id="guest">
@@ -22,6 +23,7 @@ export function App() {
       </header>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/game/catalog' element={<GameCatalog />} />
       </Routes>
     </>
   )
