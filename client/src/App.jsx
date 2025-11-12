@@ -1,4 +1,7 @@
-function App() {
+import { Routes, Route } from "react-router"
+import { Home } from "./components/Home.jsx"
+
+export function App() {
   return (
     <>
       <header>
@@ -17,8 +20,9 @@ function App() {
           </div>
         </nav>
       </header>
+      <Routes>
+        <Route path='/' element={<Home />} />
+      </Routes>
     </>
   )
 }
-
-export default App
