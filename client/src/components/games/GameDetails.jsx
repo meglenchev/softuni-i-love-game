@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router";
-import { endPoints } from "../utils/endpoints.js";
+import { endPoints } from "../../utils/endpoints.js";
 
 export function GameDetails() {
     const [gameDetails, setGameDetails] = useState({});
