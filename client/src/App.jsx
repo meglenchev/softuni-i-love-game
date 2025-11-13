@@ -1,6 +1,7 @@
 import { Routes, Route, NavLink } from "react-router"
 import { Home } from "./components/Home.jsx"
 import { GameCatalog } from "./games/GamesCatalog.jsx"
+import { GameDetails } from "./games/GameDetails.jsx"
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/game/catalog' element={<GameCatalog />} />
+        <Route path='/game/:id/details' element={<GameDetails />} />
       </Routes>
     </>
   )

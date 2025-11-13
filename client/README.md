@@ -20,3 +20,7 @@
 
 ## 5. Аdd Abort Controller
 - [x] Add Abort Controller To Fetch
+
+## 5. Аdd Game Details
+- [x] Cretae Game Details Component
+- [x] Add Game Details Controller To Fetch

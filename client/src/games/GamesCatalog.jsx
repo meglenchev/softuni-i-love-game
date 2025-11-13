@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import { endPoints } from "../utils/endpoints.js";
-import { ShortGame } from "./ShortGame.jsx";
+import { Game } from "./Game.jsx";
 
 export function GameCatalog() {
-    const [allGames, setAllGames] = useState([]);
+    const [allGames, setAllGames] = useState({});
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -30,7 +30,7 @@ export function GameCatalog() {
             <h1>Catalog</h1>
             {allGames.length > 0 ? (
                 <div className="catalog-container">
-                    {allGames.map(game => <ShortGame
+                    {allGames.map(game => <Game
                         key={game.at(0)}
                         id={game.at(0)}
                         imageUrl={game.at(1).imageUrl}

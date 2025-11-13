@@ -1,4 +1,6 @@
-export function ShortGame({
+import { NavLink } from "react-router";
+
+export function Game({
     id,
     imageUrl, 
     title, 
@@ -10,7 +12,7 @@ export function ShortGame({
             <div className="details-overlay">
                 <p className="name">{title}</p>
                 <p className="genre">{genre}</p>
-                <a href="#" className="details-button">Details</a>
+                <NavLink to={`/game/${id}/details`} className="details-button">Details</NavLink>
             </div>
         </div>
     )
