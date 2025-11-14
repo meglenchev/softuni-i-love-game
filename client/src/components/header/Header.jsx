@@ -8,7 +8,7 @@ export function Header() {
                 <NavLink to="/games/catalog">Catalog</NavLink>
 
                 <div id="user">
-                    <NavLink to="/games/add">Add Game</NavLink>
+                    <NavLink to="/games/create">Add Game</NavLink>
                     <NavLink to="/user/logout">Logout</NavLink>
                 </div>
 
