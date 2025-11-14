@@ -1,6 +1,6 @@
 import { NavLink } from "react-router";
 
-export function Game({
+export function Games({
     id,
     imageUrl, 
     title, 
@@ -12,7 +12,7 @@ export function Game({
             <div className="details-overlay">
                 <p className="name">{title}</p>
                 <p className="genre">{genre}</p>
-                <NavLink to={`/game/${id}/details`} className="details-button">Details</NavLink>
+                <NavLink to={`/games/${id}/details`} className="details-button">Details</NavLink>
             </div>
         </div>
     )

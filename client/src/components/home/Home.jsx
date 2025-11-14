@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { endPoints } from "../../utils/endpoints.js"
-import { Game } from "../games/Game.jsx";
+import { Games } from "../games/Games.jsx";
 
 export function Home() {
     const [games, setdGames] = useState([]);
@@ -40,7 +40,7 @@ export function Home() {
                 <div id="latest-wrap">
                     <div className="home-container">
                         {games.length > 0 ?
-                            (games.map(game => <Game
+                            (games.map(game => <Games
                                 key={game.at(0)}
                                 id={game.at(0)}
                                 imageUrl={game.at(1).imageUrl}

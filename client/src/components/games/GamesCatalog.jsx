@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { Game } from "./Game.jsx";
 import { endPoints } from "../../utils/endpoints.js";
+import { Games } from "./Games.jsx";
 
-export function GameCatalog() {
+export function GamesCatalog() {
     const [allGames, setAllGames] = useState({});
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export function GameCatalog() {
             <h1>Catalog</h1>
             {allGames.length > 0 ? (
                 <div className="catalog-container">
-                    {allGames.map(game => <Game
+                    {allGames.map(game => <Games
                         key={game.at(0)}
                         id={game.at(0)}
                         imageUrl={game.at(1).imageUrl}

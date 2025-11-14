@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router"
 import { Home } from "./components/home/Home.jsx"
-import { GameCatalog } from "./components/games/GamesCatalog.jsx"
-import { GameDetails } from "./components/games/GameDetails.jsx"
+import { GamesCatalog } from "./components/games/GamesCatalog.jsx"
+import { GamesDetails } from "./components/games/GamesDetails.jsx"
 import { Header } from "./components/header/Header.jsx"
 import { Footer } from "./components/footer/Footer.jsx"
 
@@ -11,8 +11,8 @@ export function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/game/catalog' element={<GameCatalog />} />
-        <Route path='/game/:id/details' element={<GameDetails />} />
+        <Route path='/games/catalog' element={<GamesCatalog />} />
+        <Route path='/games/:gameId/details' element={<GamesDetails />} />
       </Routes>
       <Footer />
     </>

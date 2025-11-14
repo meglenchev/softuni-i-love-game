@@ -24,3 +24,4 @@
 ## 5. Аdd Game Details
 - [x] Cretae Game Details Component
 - [x] Add Game Details Controller To Fetch
+- [x] Create Delete Game Handler

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { endPoints } from "../../utils/endpoints.js";
 
-export function GameDetails() {
+export function GamesDetails() {
+    const navigate = useNavigate();
     const [gameDetails, setGameDetails] = useState({});
-    let params = useParams();
+    const { gameId } = useParams();
 
     useEffect(() => {
         const abortController = new AbortController();
 
         (async () => {
             try {
-                const res = await fetch(endPoints.details(params.id), { signal: abortController.signal });
+                const res = await fetch(endPoints.details(gameId), { signal: abortController.signal });
 
                 const gameData = await res.json();
                 setGameDetails(gameData)
@@ -24,7 +25,26 @@ export function GameDetails() {
         return () => {
             abortController.abort();
         }
-    }, [])
+    }, [gameId])
+
+    const deleteGameHandler = async () => {
+        const isConfirm = confirm(`Are you sure you want to delete ${gameDetails.title}?`);
+
+        if (!isConfirm) {
+            return;
+        }
+
+        try {
+            await fetch(endPoints.details(gameId), {
+                method: 'DELETE',
+            });
+
+            navigate('/');
+
+        } catch (err) {
+            alert(`Unable to delete game: ${err.message}`)
+        }
+    }
 
     return (
         <section id="game-details">
@@ -55,7 +75,7 @@ export function GameDetails() {
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
                     <a href="#" className="button">Edit</a>
-                    <a href="#" className="button">Delete</a>
+                    <button className="button" onClick={deleteGameHandler}>Delete</button>
                 </div>
                 <div className="details-comments">
                     <h2>Comments:</h2>
@@ -68,7 +88,7 @@ export function GameDetails() {
                         </li>
                     </ul>
                     {/* Display paragraph: If there are no games in the database */}
-                    {/* <p class="no-comment">No comments.</p> */}
+                    {/* <p className="no-comment">No comments.</p> */}
                 </div>
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
