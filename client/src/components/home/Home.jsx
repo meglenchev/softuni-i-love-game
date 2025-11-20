@@ -13,8 +13,10 @@ export function Home() {
                 const res = await fetch(endPoints.allGames, {signal: abortController.signal});
 
                 const gamesData = await res.json();
+                
                 const allGames = Object.entries(gamesData);
-                setdGames(allGames.slice(0, 3));
+                
+                setdGames(allGames.sort((a, b) => b[1]._createdOn - a[1]._createdOn).slice(0, 3));
 
             } catch (err) {
                 throw new Error(err.message);
