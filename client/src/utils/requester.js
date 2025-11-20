@@ -6,7 +6,7 @@ async function requester(method, url, data) {
 
     if (data) {
         options.headers['Content-type'] = 'application/json',
-            options.body = JSON.stringify(data)
+        options.body = JSON.stringify(data)
     }
 
     try {

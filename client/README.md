@@ -28,3 +28,4 @@
 
 ## 5. Add Game
 - [x] Cretae Add Game Component
+- [x] Modifying The Form From Uncontrolled To Controlled
