@@ -32,3 +32,4 @@
 - [x] Checking If All Fields Are Filled In 
 - [x] Add Game Functionality
 - [x] Sort The Homepage To Show The Last Three Added Games
+- [x] Using The Requester To Create a Game
