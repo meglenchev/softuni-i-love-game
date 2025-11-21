@@ -7,6 +7,7 @@ import { GamesDetails } from "./components/games/GamesDetails.jsx"
 import { GamesCreate } from "./components/games/GamesCreate.jsx"
 import { Login } from "./components/users/Login.jsx"
 import { Register } from "./components/users/Register.jsx"
+import { GamesEdit } from "./components/games/GamesEdit.jsx"
 
 export function App() {
 	return (
@@ -14,9 +15,12 @@ export function App() {
 			<Header />
 			<Routes>
 				<Route path='/' element={<Home />} />
+
 				<Route path='/games/catalog' element={<GamesCatalog />} />
 				<Route path='/games/:gameId/details' element={<GamesDetails />} />
 				<Route path='/games/create' element={<GamesCreate />} />
+				<Route path="/games/:gameId/edit" element={<GamesEdit />} />
+				
 				<Route path="/users">
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />

@@ -1,4 +1,4 @@
-async function requester(method, url, data) {
+export async function requester(method, url, data) {
     const options = {
         method,
         headers: {}
@@ -6,26 +6,69 @@ async function requester(method, url, data) {
 
     if (data) {
         options.headers['Content-type'] = 'application/json',
+        
         options.body = JSON.stringify(data)
     }
 
-    try {
-        const res = await fetch(url, options, {})
+    const res = await fetch(url, options)
 
-        if (!res.ok) {
-            const err = await res.json();
-            alert(err.message);
-
-            throw err;
-        }
-
-        return res.json()
-    } catch (err) {
+    if (!res.ok) {
+        const err = await res.json();
+        
         alert(err.message);
+
+        throw err;
     }
+
+    return res.json();
 }
 
-export const get = (url) => requester('GET', url);
-export const post = (url, data) => requester('POST', url, data);
-export const put = (url, data) => requester('PUT', url, data);
-export const del = (url) => requester('DELETE', url);
+// import { endPoints } from "./endpoints.js";
+
+// async function requester(method, url, data) {
+//     const options = {
+//         method,
+//         headers: {}
+//     }
+
+//     if (data) {
+//         options.headers['Content-type'] = 'application/json',
+//         options.body = JSON.stringify(data)
+//     }
+
+//     try {
+//         const res = await fetch(url, options)
+
+//         if (!res.ok) {
+//             const err = await res.json();
+            
+//             alert(err.message);
+
+//             throw err;
+//         }
+
+//         return res.json()
+//     } catch (err) {
+//         alert(err.message);
+//     }
+// }
+
+// export async function allGames() {
+//     return requester('GET', endPoints.allGames);
+// }
+
+// export async function itemDelete(id) {
+//     return requester('DELETE', endPoints.details(id));
+// }
+
+// export async function getDetails(id) {
+//     return requester('GET', endPoints.details(id),);
+// }
+
+// export async function editGames(id, data) {
+//     return requester('PUT', endPoints.details(id), data);
+// }
+
+// export async function addGames(data) {
+//     return requester('POST', endPoints.post, data);
+// }

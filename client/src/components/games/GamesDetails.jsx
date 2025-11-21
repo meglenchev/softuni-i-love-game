@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router";
+import { NavLink, useNavigate, useParams } from "react-router";
 import { endPoints } from "../../utils/endpoints.js";
 
 export function GamesDetails() {
@@ -74,7 +74,7 @@ export function GamesDetails() {
                 </div>
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
-                    <a href="#" className="button">Edit</a>
+                    <NavLink to={`/games/${gameId}/edit`} className="button">Edit</NavLink>
                     <button className="button" onClick={deleteGameHandler}>Delete</button>
                 </div>
                 <div className="details-comments">

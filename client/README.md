@@ -34,7 +34,10 @@
 - [x] Sort The Homepage To Show The Last Three Added Games
 - [x] Using The Requester To Create a Game
 
-## 5. Create Login / Register
+## 6. Create Login / Register
 - [x] Cretae Login / Register View
 - [x] Cretae Login / Register Router
 - [x] Cretae Login Data Validation
+
+## 7. Create Edit Page
+- [x] Add Edit Functionality

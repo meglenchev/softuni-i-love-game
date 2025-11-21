@@ -9,10 +9,12 @@ let initialLoginData = {
 function validate(values) {
     let errors = {}
 
+    //Validate E-mail Field
     if (!values.email) {
         errors['email'] = 'E-mail is required!'
     }
 
+    //Validate Password Field
     if (!values.password) {
         errors['password'] = 'Passowrd is required!'
     }
@@ -39,6 +41,8 @@ export function Login() {
             alert(Object.values(validate(loginData)).at(0))
             return;
         }
+
+        setLoginData(initialLoginData);
 
         navigate('/');
     }

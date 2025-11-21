@@ -10,9 +10,10 @@ export function GamesCatalog() {
 
         (async () => {
             try {
-                const res = await fetch(endPoints.allGames, { signal: abortController.signal });
+                const res = await fetch(endPoints.allGames, {signal: abortController.signal});
 
                 const gamesData = await res.json();
+                
                 setAllGames(Object.entries(gamesData));
 
             } catch (err) {
