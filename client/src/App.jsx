@@ -2,12 +2,12 @@ import { Routes, Route } from "react-router"
 import { Header } from "./components/header/Header.jsx"
 import { Footer } from "./components/footer/Footer.jsx"
 import { Home } from "./components/home/Home.jsx"
-import { GamesCatalog } from "./components/games/GamesCatalog.jsx"
-import { GamesDetails } from "./components/games/GamesDetails.jsx"
-import { GamesCreate } from "./components/games/GamesCreate.jsx"
 import { Login } from "./components/users/Login.jsx"
 import { Register } from "./components/users/Register.jsx"
-import { GamesEdit } from "./components/games/GamesEdit.jsx"
+import { GamesCatalog } from "./components/games/catalog/GamesCatalog.jsx"
+import { GamesDetails } from "./components/games/details/GamesDetails.jsx"
+import { GamesCreate } from "./components/games/create/GamesCreate.jsx"
+import { GamesEdit } from "./components/games/edit/GamesEdit.jsx"
 
 export function App() {
 	return (

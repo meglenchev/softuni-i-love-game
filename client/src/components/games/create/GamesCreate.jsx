@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { validate } from "./utils/createGameValidation.js";
-import { endPoints } from "../../utils/endpoints.js";
+import { validate } from "../utils/createGameValidation.js";
+import { endPoints } from "../../../utils/endpoints.js";
 import { useNavigate } from "react-router";
 
 let initialGameData = {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { NavLink, useNavigate, useParams } from "react-router";
-import { endPoints } from "../../utils/endpoints.js";
-import { GamesComment } from "./utils/GamesComment.jsx";
+import { endPoints } from "../../../utils/endpoints.js";
+import { GamesComment } from "../comments/GamesComment.jsx";
 
 const initialComment = {
     gameId: '',

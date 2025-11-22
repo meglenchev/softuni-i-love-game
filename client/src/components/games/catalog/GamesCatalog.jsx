@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { endPoints } from "../../utils/endpoints.js";
 import { Games } from "./Games.jsx";
+import { endPoints } from "../../../utils/endpoints.js";
 
 export function GamesCatalog() {
     const [allGames, setAllGames] = useState({});
