@@ -41,3 +41,6 @@
 
 ## 7. Create Edit Page
 - [x] Add Edit Functionality
+
+## 8. Create Comment
+- [x] Add Comment Functionality
