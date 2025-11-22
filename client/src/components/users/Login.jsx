@@ -38,8 +38,7 @@ export function Login() {
         e.preventDefault();
 
         if (Object.keys(validate(loginData)).length > 0) {
-            alert(Object.values(validate(loginData)).at(0))
-            return;
+            return alert(Object.values(validate(loginData)).at(0));
         }
 
         setLoginData(initialLoginData);

@@ -31,14 +31,12 @@ export function GamesCreate() {
         if (Object.keys(errors).length > 0) {
             const errorsMessage = Object.values(errors);
 
-            alert(errorsMessage.at(0));
-
-            return;
+            return alert(errorsMessage.at(0));;
         }
 
         game._createdOn = Date.now();
 
-        const response = async () => {
+        (async () => {
             try {
                 await fetch(
                     endPoints.allGames,
@@ -53,10 +51,8 @@ export function GamesCreate() {
             } catch (err) {
                 throw new Error(err.message);
             }
-        };
+        })();
 
-        await response();
-        
         setGame(initialGameData);
 
         navigate('/');

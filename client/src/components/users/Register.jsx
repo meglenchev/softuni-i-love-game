@@ -44,8 +44,7 @@ export function Register() {
         e.preventDefault();
 
         if (Object.entries(validate(registerData)).length > 0) {
-            alert(Object.values(validate(registerData)).at(0))
-            return;
+            return alert(Object.values(validate(registerData)).at(0));
         }
 
         setRegisterData(initialRegisterData);
