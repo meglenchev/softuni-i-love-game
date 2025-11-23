@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react"
 import { NavLink, useNavigate, useParams } from "react-router";
 import { endPoints } from "../../../utils/endpoints.js";
-import { GamesComment } from "../comments/GamesComment.jsx";
-
-const initialComment = {
-    gameId: '',
-    comment: ''
-}
+import { CreateComment } from "../create-comment/CreateComment.jsx";
+import { DetailsComments } from "../details-comments/DetailsComments.jsx";
 
 export function GamesDetails() {
     const navigate = useNavigate();
-    const [addComment, setAddComment] = useState(initialComment);
-    const [allComments, setAllComments] = useState([]);
     const [gameDetails, setGameDetails] = useState({});
     const { gameId } = useParams();
 
@@ -54,62 +48,6 @@ export function GamesDetails() {
         }
     }
 
-    const createCommentHandler = (e) => {
-        setAddComment((addComment) => ({
-            ...addComment,
-            [e.target.name]: e.target.value,
-            gameId: gameId
-        }))
-    }
-
-    const submitCommentHandler = (e) => {
-        e.preventDefault();
-
-        if (!addComment.comment) {
-            return alert('Comment is required!');
-        }
-
-        (async () => {
-            try {
-                await fetch(
-                    endPoints.addComment,
-                    {
-                        method: 'post',
-                        headers: {
-                            'Content-type': 'application/json'
-                        },
-                        body: JSON.stringify(addComment)
-                    });
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        })();
-
-        setAddComment(initialComment);
-    }
-
-    useEffect(() => {
-        const abortController = new AbortController();
-
-        (async () => {
-            try {
-                const res = await fetch(endPoints.comments(gameId), { signal: abortController.signal });
-
-                const commentData = await res.json();
-
-                setAllComments(Object.values(commentData));
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        })();
-
-        return () => {
-            abortController.abort();
-        }
-    }, [gameId])
-
     return (
         <section id="game-details">
             <h1>Game Details</h1>
@@ -141,32 +79,10 @@ export function GamesDetails() {
                     <NavLink to={`/games/${gameId}/edit`} className="button">Edit</NavLink>
                     <button className="button" onClick={deleteGameHandler}>Delete</button>
                 </div>
-                <div className="details-comments">
-                    <h2>Comments:</h2>
-                    {allComments.length ? (
-                        <ul>
-                            {allComments.map(comment => <GamesComment
-                                key={comment._id}
-                                comment={comment.comment}
-                            />)}
-                        </ul>
-                    ) 
-                    : <p className="no-comment">No comments.</p>}
-                </div>
+                <DetailsComments />
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            <article className="create-comment">
-                <label>Add new comment:</label>
-                <form className="form" onSubmit={submitCommentHandler}>
-                    <textarea
-                        name="comment"
-                        placeholder="Comment......"
-                        value={addComment.comment}
-                        onChange={createCommentHandler}
-                    />
-                    <input className="btn submit" type="submit" defaultValue="Add Comment" />
-                </form>
-            </article>
+            <CreateComment />
         </section>
 
     )
