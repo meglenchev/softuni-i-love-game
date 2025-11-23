@@ -1,7 +1,7 @@
-export function GamesComment({comment}) {
+export function GamesComment({comment, author}) {
     return (
         <li className="comment">
-            <p>{comment}</p>
+            <p>{author}: {comment}</p>
         </li>
     )
 }

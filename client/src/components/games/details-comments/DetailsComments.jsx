@@ -3,7 +3,7 @@ import { endPoints } from "../../../utils/endpoints.js";
 import { GamesComment } from "./GamesComment.jsx";
 import { useParams } from "react-router";
 
-export function DetailsComments() {
+export function DetailsComments({ refresh }) {
     const { gameId } = useParams();
     const [allComments, setAllComments] = useState([]);
 
@@ -30,7 +30,7 @@ export function DetailsComments() {
         return () => {
             abortController.abort();
         }
-    }, [gameId])
+    }, [gameId, refresh])
 
     return (
         <div className="details-comments">
@@ -40,6 +40,7 @@ export function DetailsComments() {
                     {allComments.map(comment => <GamesComment
                         key={comment._id}
                         comment={comment.comment}
+                        author={comment.author}
                     />)}
                 </ul>
             )

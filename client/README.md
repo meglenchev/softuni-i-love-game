@@ -45,3 +45,4 @@
 ## 8. Create Comment
 - [x] Add Comment Functionality
 - [x] Filter Comments For The Selected Game
+- [x] Show A New Comment As Soon As It Is Added

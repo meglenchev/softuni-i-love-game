@@ -7,6 +7,7 @@ import { DetailsComments } from "../details-comments/DetailsComments.jsx";
 export function GamesDetails() {
     const navigate = useNavigate();
     const [gameDetails, setGameDetails] = useState({});
+    const [refresh, setRefresh] = useState(false);
     const { gameId } = useParams();
 
     useEffect(() => {
@@ -48,6 +49,10 @@ export function GamesDetails() {
         }
     }
 
+    const refreshHandler = () => {
+        setRefresh(refresh => !refresh)
+    }
+
     return (
         <section id="game-details">
             <h1>Game Details</h1>
@@ -79,10 +84,10 @@ export function GamesDetails() {
                     <NavLink to={`/games/${gameId}/edit`} className="button">Edit</NavLink>
                     <button className="button" onClick={deleteGameHandler}>Delete</button>
                 </div>
-                <DetailsComments />
+                <DetailsComments refresh={refresh} />
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            <CreateComment />
+            <CreateComment onCreate={refreshHandler} />
         </section>
 
     )

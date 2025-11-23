@@ -7,7 +7,7 @@ const initialComment = {
     comment: ''
 }
 
-export function CreateComment() {
+export function CreateComment({ onCreate }) {
     const { gameId } = useParams();
     const [comment, setComment] = useState(initialComment);
 
@@ -39,12 +39,13 @@ export function CreateComment() {
                         body: JSON.stringify(comment)
                     });
 
+                    setComment(initialComment);
+                    onCreate();
+
             } catch (err) {
                 throw new Error(err.message);
             }
         })();
-
-        setComment(initialComment);
     }
 
     return (
