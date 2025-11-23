@@ -44,3 +44,4 @@
 
 ## 8. Create Comment
 - [x] Add Comment Functionality
+- [x] Filter Comments For The Selected Game

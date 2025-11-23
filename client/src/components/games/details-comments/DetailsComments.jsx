@@ -17,7 +17,9 @@ export function DetailsComments() {
                 if (res.headers.get("content-type")) {
                     const commentData = await res.json();
 
-                    setAllComments(Object.values(commentData));
+                    const comments = Object.values(commentData).filter(comment => comment.gameId === gameId);
+
+                    setAllComments(Object.values(comments));
                 }
 
             } catch (err) {
