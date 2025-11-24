@@ -13,7 +13,24 @@ export function GamesDetails() {
     useEffect(() => {
         const abortController = new AbortController();
 
-        (async () => {
+        // fetch(endPoints.details(gameId))
+        //     .then(res => res.json())
+        //     .then(result => setGameDetails(result))
+        //     .catch(err => alert(err.message))
+
+        // (async () => {
+        //     try {
+        //         const res = await fetch(endPoints.details(gameId), { signal: abortController.signal });
+
+        //         const gameData = await res.json();
+        //         setGameDetails(gameData)
+
+        //     } catch (err) {
+        //         throw new Error(err.message);
+        //     }
+        // })();
+
+        async function getGameDetails() {
             try {
                 const res = await fetch(endPoints.details(gameId), { signal: abortController.signal });
 
@@ -23,12 +40,14 @@ export function GamesDetails() {
             } catch (err) {
                 throw new Error(err.message);
             }
-        })();
+        }
+
+        getGameDetails();
 
         return () => {
             abortController.abort();
         }
-    }, [gameId])
+    }, [gameId]);
 
     const deleteGameHandler = async () => {
         const isConfirm = confirm(`Are you sure you want to delete ${gameDetails.title}?`);

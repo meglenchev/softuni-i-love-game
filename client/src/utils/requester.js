@@ -17,7 +17,7 @@ export async function requester(method, url, data) {
         
         alert(err.message);
 
-        throw err;
+        throw err.message;
     }
 
     return res.json();
