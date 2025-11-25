@@ -6,7 +6,7 @@ import { Login } from "./components/users/Login.jsx"
 import { Register } from "./components/users/Register.jsx"
 import { GamesCatalog } from "./components/games/catalog/GamesCatalog.jsx"
 import { GamesDetails } from "./components/games/details/GamesDetails.jsx"
-import { GamesCreate } from "./components/games/create/GamesCreate.jsx"
+import { GamesCreate } from "./components/games/create-game/GamesCreate.jsx"
 import { GamesEdit } from "./components/games/edit/GamesEdit.jsx"
 
 export function App() {

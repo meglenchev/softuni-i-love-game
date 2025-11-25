@@ -2,7 +2,6 @@ import { useState } from "react";
 import { validate } from "../utils/createGameValidation.js";
 import { endPoints } from "../../../utils/endpoints.js";
 import { useNavigate } from "react-router";
-import { requester } from "../../../utils/requester.js";
 
 let initialGameData = {
     title: '',
@@ -37,28 +36,22 @@ export function GamesCreate() {
 
         game._createdOn = Date.now();
 
-        try {
-            await requester('POST', endPoints.allGames, game)
-        } catch (err) {
-            alert(`ERROR: ${err.message}`)
-        }
+        (async () => {
+            try {
+                await fetch(
+                    endPoints.allGames,
+                    {
+                        method: 'post',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify(game)
+                    });
 
-        // (async () => {
-        //     try {
-        //         await fetch(
-        //             endPoints.allGames,
-        //             {
-        //                 method: 'post',
-        //                 headers: {
-        //                     'Content-type': 'application/json'
-        //                 },
-        //                 body: JSON.stringify(game)
-        //             });
-
-        //     } catch (err) {
-        //         throw new Error(err.message);
-        //     }
-        // })();
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        })();
 
         setGame(initialGameData);
 
