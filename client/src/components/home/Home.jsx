@@ -1,32 +1,15 @@
-import { useEffect, useState } from "react"
 import { endPoints } from "../../utils/endpoints.js"
 import { Games } from "../games/catalog/Games.jsx";
+import { useFetch } from "../hooks/useFetch.js";
 
 export function Home() {
-    const [games, setdGames] = useState([]);
+    const { data, error, isPanding } = useFetch(endPoints.allGames, {})
 
-    useEffect(() => {
-        const abortController = new AbortController();
+    const gameData = Object.entries(data).sort((a, b) => b[1]._createdOn - a[1]._createdOn).slice(0, 3);
 
-        (async () => {
-            try {
-                const res = await fetch(endPoints.allGames, {signal: abortController.signal});
-
-                const gamesData = await res.json();
-                
-                const allGames = Object.entries(gamesData);
-                
-                setdGames(allGames.sort((a, b) => b[1]._createdOn - a[1]._createdOn).slice(0, 3));
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        })();
-
-        return () => {
-            abortController.abort();
-        }
-    }, [])
+    if (error) {
+        return <h2 style={{ color: 'red', textTransform: 'uppercase' }}>{error}</h2>
+    }
 
     return (
         <section id="welcome-world">
@@ -41,16 +24,18 @@ export function Home() {
                 <h1>Latest Games</h1>
                 <div id="latest-wrap">
                     <div className="home-container">
-                        {games.length > 0 ?
-                            (games.map(game => <Games
-                                key={game.at(0)}
-                                id={game.at(0)}
-                                imageUrl={game.at(1).imageUrl}
-                                title={game.at(1).title}
-                                genre={game.at(1).genre}
-                            />))
-                            : <p className="no-articles">No games yet</p>}
-
+                        {isPanding
+                            ? <p style={{ color: 'white' }}>Loading...</p>
+                            : gameData.length > 0 
+                                ? (gameData.map(game => <Games
+                                    key={game.at(0)}
+                                    id={game.at(0)}
+                                    imageUrl={game.at(1).imageUrl}
+                                    title={game.at(1).title}
+                                    genre={game.at(1).genre}
+                                />))
+                                : <p className="no-articles">No games yet!</p>
+                        }
                     </div>
                 </div>
             </div>
