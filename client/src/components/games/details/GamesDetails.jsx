@@ -1,53 +1,16 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { NavLink, useNavigate, useParams } from "react-router";
 import { endPoints } from "../../../utils/endpoints.js";
 import { CreateComment } from "../create-comment/CreateComment.jsx";
 import { DetailsComments } from "../details-comments/DetailsComments.jsx";
+import { useFetch } from "../../hooks/useFetch.js";
 
 export function GamesDetails() {
     const navigate = useNavigate();
-    const [gameDetails, setGameDetails] = useState({});
     const [refresh, setRefresh] = useState(false);
     const { gameId } = useParams();
 
-    useEffect(() => {
-        const abortController = new AbortController();
-
-        // fetch(endPoints.details(gameId))
-        //     .then(res => res.json())
-        //     .then(result => setGameDetails(result))
-        //     .catch(err => alert(err.message))
-
-        // (async () => {
-        //     try {
-        //         const res = await fetch(endPoints.details(gameId), { signal: abortController.signal });
-
-        //         const gameData = await res.json();
-        //         setGameDetails(gameData)
-
-        //     } catch (err) {
-        //         throw new Error(err.message);
-        //     }
-        // })();
-
-        async function getGameDetails() {
-            try {
-                const res = await fetch(endPoints.details(gameId), { signal: abortController.signal });
-
-                const gameData = await res.json();
-                setGameDetails(gameData)
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        }
-
-        getGameDetails();
-
-        return () => {
-            abortController.abort();
-        }
-    }, [gameId]);
+    const { data: gameDetails, isPanding } = useFetch(endPoints.details(gameId), {}, gameId);
 
     const deleteGameHandler = async () => {
         const isConfirm = confirm(`Are you sure you want to delete ${gameDetails.title}?`);
@@ -76,28 +39,31 @@ export function GamesDetails() {
         <section id="game-details">
             <h1>Game Details</h1>
             <div className="info-section">
-                <div className="header-and-image">
-                    <img className="game-img" src={gameDetails.imageUrl} alt={gameDetails.title} />
-                    <div className="meta-info">
-                        <h1 className="game-name">{gameDetails.title}</h1>
-                        <p className="data-row">
-                            <span className="label">Genre:</span>
-                            <span className="value">{gameDetails.genre}</span>
-                        </p>
-                        <p className="data-row">
-                            <span className="label">Active Players:</span>
-                            <span className="value">{gameDetails.players}</span>
-                        </p>
-                        <p className="data-row">
-                            <span className="label">Release Date:</span>
-                            <span className="value">{gameDetails.date}</span>
-                        </p>
+                {isPanding
+                    ? <h3 className="no-articles" style={{ color: 'white' }}>Loading...</h3>
+                    : <div className="header-and-image">
+                        <img className="game-img" src={gameDetails.imageUrl} alt={gameDetails.title} />
+                        <div className="meta-info">
+                            <h1 className="game-name">{gameDetails.title}</h1>
+                            <p className="data-row">
+                                <span className="label">Genre:</span>
+                                <span className="value">{gameDetails.genre}</span>
+                            </p>
+                            <p className="data-row">
+                                <span className="label">Active Players:</span>
+                                <span className="value">{gameDetails.players}</span>
+                            </p>
+                            <p className="data-row">
+                                <span className="label">Release Date:</span>
+                                <span className="value">{gameDetails.date}</span>
+                            </p>
+                        </div>
+                        <div className="summary-section">
+                            <h2>Summary:</h2>
+                            <p className="text-summary">{gameDetails.summary}</p>
+                        </div>
                     </div>
-                    <div className="summary-section">
-                        <h2>Summary:</h2>
-                        <p className="text-summary">{gameDetails.summary}</p>
-                    </div>
-                </div>
+                }
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
                     <NavLink to={`/games/${gameId}/edit`} className="button">Edit</NavLink>

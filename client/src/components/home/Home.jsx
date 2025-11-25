@@ -3,13 +3,9 @@ import { Games } from "../games/catalog/Games.jsx";
 import { useFetch } from "../hooks/useFetch.js";
 
 export function Home() {
-    const { data, error, isPanding } = useFetch(endPoints.allGames, {})
+    const { data, isPanding } = useFetch(endPoints.allGames, {})
 
     const gameData = Object.entries(data).sort((a, b) => b[1]._createdOn - a[1]._createdOn).slice(0, 3);
-
-    if (error) {
-        return <h2 style={{ color: 'red', textTransform: 'uppercase' }}>{error}</h2>
-    }
 
     return (
         <section id="welcome-world">

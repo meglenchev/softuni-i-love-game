@@ -51,3 +51,4 @@
 - [x] Create useFetch Hook
 - [x] Using useFetch In Home
 - [x] Using useFetch In Games Catalog
+- [x] Using useFetch In Games Details

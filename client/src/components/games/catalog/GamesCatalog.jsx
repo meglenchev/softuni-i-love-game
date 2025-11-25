@@ -3,13 +3,9 @@ import { endPoints } from "../../../utils/endpoints.js";
 import { useFetch } from "../../hooks/useFetch.js";
 
 export function GamesCatalog() {
-    const { data, error, isPanding } = useFetch(endPoints.allGames, {})
+    const { data, isPanding } = useFetch(endPoints.allGames, {})
 
     const allGames = Object.entries(data);
-
-    if (error) {
-        return <h2 style={{ color: 'red', textTransform: 'uppercase' }}>{error}</h2>
-    }
 
     return (
         <section id="catalog-page">
