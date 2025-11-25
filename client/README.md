@@ -49,6 +49,8 @@
 
 ## 11. Optimization and adding new functionalities
 - [x] Create useFetch Hook
-- [x] Using useFetch In Home
-- [x] Using useFetch In Games Catalog
-- [x] Using useFetch In Games Details
+- [x] Using useFetch Hook In Home
+- [x] Using useFetch Hook In Games Catalog
+- [x] Using useFetch Hook In Games Details
+- [x] Extending the useFetch Hook Functionality With The Ability To Refresh The State
+- [x] Using useFetch Hook In Games Comments

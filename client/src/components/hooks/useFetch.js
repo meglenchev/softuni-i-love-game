@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useFetch(url, initialState, gameId) {
+export function useFetch(url, initialState, gameId, refresh) {
     const [data, setData] = useState(initialState);
     const [isPanding, setIsPanding] = useState(true);
 
@@ -28,7 +28,7 @@ export function useFetch(url, initialState, gameId) {
         return () => {
             abortController.abort();
         }
-    }, [url, gameId])
+    }, [url, gameId, refresh])
 
     return { data, isPanding };
 }
