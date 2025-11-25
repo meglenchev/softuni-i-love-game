@@ -50,3 +50,4 @@
 ## 11. Optimization and adding new functionalities
 - [x] Create useFetch Hook
 - [x] Using useFetch In Home
+- [x] Using useFetch In Games Catalog

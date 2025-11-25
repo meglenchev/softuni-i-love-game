@@ -1,46 +1,33 @@
-import { useEffect, useState } from "react"
 import { Games } from "./Games.jsx";
 import { endPoints } from "../../../utils/endpoints.js";
+import { useFetch } from "../../hooks/useFetch.js";
 
 export function GamesCatalog() {
-    const [allGames, setAllGames] = useState({});
+    const { data, error, isPanding } = useFetch(endPoints.allGames, {})
 
-    useEffect(() => {
-        const abortController = new AbortController();
+    const allGames = Object.entries(data);
 
-        (async () => {
-            try {
-                const res = await fetch(endPoints.allGames, {signal: abortController.signal});
-
-                const gamesData = await res.json();
-                
-                setAllGames(Object.entries(gamesData));
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        })();
-
-        return () => {
-            abortController.abort();
-        }
-    }, [])
+    if (error) {
+        return <h2 style={{ color: 'red', textTransform: 'uppercase' }}>{error}</h2>
+    }
 
     return (
         <section id="catalog-page">
             <h1>Catalog</h1>
-            {allGames.length > 0 ? (
-                <div className="catalog-container">
-                    {allGames.map(game => <Games
-                        key={game.at(0)}
-                        id={game.at(0)}
-                        imageUrl={game.at(1).imageUrl}
-                        title={game.at(1).title}
-                        genre={game.at(1).genre}
-                    />)}
-                </div>
-            ) 
-            : <h3 className="no-articles">No Added Games Yet</h3>}
+            {isPanding
+                ? <h3 className="no-articles" style={{ color: 'white' }}>Loading...</h3>
+                : allGames.length > 0 ? (
+                    <div className="catalog-container">
+                        {allGames.map(game => <Games
+                            key={game.at(0)}
+                            id={game.at(0)}
+                            imageUrl={game.at(1).imageUrl}
+                            title={game.at(1).title}
+                            genre={game.at(1).genre}
+                        />)}
+                    </div>
+                )
+                    : <h3 className="no-articles">No Added Games Yet</h3>}
         </section>
     )
 }

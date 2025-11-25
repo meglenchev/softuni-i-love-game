@@ -25,7 +25,7 @@ export function Home() {
                 <div id="latest-wrap">
                     <div className="home-container">
                         {isPanding
-                            ? <p style={{ color: 'white' }}>Loading...</p>
+                            ? <h3 className="no-articles" style={{ color: 'white' }}>Loading...</h3>
                             : gameData.length > 0 
                                 ? (gameData.map(game => <Games
                                     key={game.at(0)}
