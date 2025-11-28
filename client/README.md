@@ -57,6 +57,6 @@
 - [x] Update React to the latest version
 - [x] Add a new server
 - [x] Create useForm Hook
-- [] Using useForm in registration
+- [x] Using useForm in registration
 - [] Using useForm in login
 - [] Create UserContext
