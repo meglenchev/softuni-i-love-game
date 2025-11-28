@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { endPoints } from "../../utils/endpoints.js";
 import { UserContext } from "../../contexts/UserContext.js";
 import { useForm } from "../hooks/useForm.js";
+import { useRequest } from "../hooks/useRequest.js";
 
 let initialRegisterData = {
     email: '',
@@ -33,6 +34,7 @@ function validate(values) {
 
 export function Register() {
     const { onLogin } = useContext(UserContext);
+    const { request } = useRequest();
 
     const navigate = useNavigate();
 
@@ -44,21 +46,13 @@ export function Register() {
             return alert(Object.values(validate(formValues)).at(0));
         }
 
-        const res = await fetch(endPoints.register, {
-            method: 'POST',
-            headers: {
-                'content-type': 'aplication/json',
-            },
-            body: JSON.stringify({ email, password })
-        })
-
-        const result = await res.json()
+        const result = await request(endPoints.register, 'POST', { email, password });
 
         onLogin({ email: result.email, accessToken: result.accessToken, _id: result._id });
 
         navigate('/');
     }
-
+    
     const { propertiesRegister, formAction } = useForm(submitUserRegisterData, initialRegisterData)
 
     return (

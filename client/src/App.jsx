@@ -25,7 +25,7 @@ export function App() {
 
 	const contextValue = {
 		user,
-		isAuthenticated: !!user.accessToken,
+		isAuthenticated: !!user?.accessToken,
 		onLogin: loginHandler,
 		onLogout: logOutHandler
 	}

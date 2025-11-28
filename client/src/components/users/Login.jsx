@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import { endPoints } from "../../utils/endpoints.js"
 import { UserContext } from "../../contexts/UserContext.js"
 import { useForm } from "../hooks/useForm.js"
+import { useRequest } from "../hooks/useRequest.js"
 
 let initialLoginData = {
     email: '',
@@ -27,6 +28,7 @@ function validate(values) {
 
 export function Login() {
     const { onLogin } = useContext(UserContext)
+    const { request } = useRequest();
 
     const navigate = useNavigate();
 
@@ -36,16 +38,8 @@ export function Login() {
         if (Object.keys(validate(formValues)).length > 0) {
             return alert(Object.values(validate(formValues)).at(0));
         }
-
-        const res = await fetch(endPoints.login, {
-            method: 'POST',
-            headers: {
-                'content-type': 'aplication/json'
-            },
-            body: JSON.stringify({email, password})
-        })
-
-        const result = await res.json()
+        
+        const result = await request(endPoints.login, 'POST', {email, password})
 
         onLogin(result);
 
