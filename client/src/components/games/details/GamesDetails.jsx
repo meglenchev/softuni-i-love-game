@@ -1,11 +1,14 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { NavLink, useNavigate, useParams } from "react-router";
 import { endPoints } from "../../../utils/endpoints.js";
 import { CreateComment } from "../create-comment/CreateComment.jsx";
 import { DetailsComments } from "../details-comments/DetailsComments.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
+import { UserContext } from "../../../contexts/UserContext.js";
 
 export function GamesDetails() {
+    const { user, isAuthenticated } = useContext(UserContext);
+
     const navigate = useNavigate();
     const [refresh, setRefresh] = useState(false);
     const { gameId } = useParams();
@@ -65,14 +68,16 @@ export function GamesDetails() {
                     </div>
                 }
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
-                <div className="buttons">
-                    <NavLink to={`/games/${gameId}/edit`} className="button">Edit</NavLink>
-                    <button className="button" onClick={deleteGameHandler}>Delete</button>
-                </div>
+                {gameDetails._ownerId === user._id && (
+                    <div className="buttons">
+                        <NavLink to={`/games/${gameId}/edit`} className="button">Edit</NavLink>
+                        <button className="button" onClick={deleteGameHandler}>Delete</button>
+                    </div>
+                )}
                 <DetailsComments refresh={refresh} />
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            <CreateComment onCreate={refreshHandler} />
+            { isAuthenticated && <CreateComment onCreate={refreshHandler} />}
         </section>
 
     )

@@ -1,4 +1,7 @@
 export const endPoints = {
+    login: 'http://localhost:3030/users/login',
+    register: 'http://localhost:3030/users/register',
+    logout: 'http://localhost:3030/users/logout',
     allGames: 'http://localhost:3030/jsonstore/games?sortBy=_createdOn%20desc', 
     post: 'http://localhost:3030/jsonstore/games',
     addComment: 'http://localhost:3030/jsonstore/comments',

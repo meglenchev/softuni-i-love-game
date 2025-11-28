@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { endPoints } from "../../../utils/endpoints.js";
 import { useParams } from "react-router";
+import { UserContext } from "../../../contexts/UserContext.js";
 
 const initialComment = {
     gameId: '',
@@ -8,6 +9,7 @@ const initialComment = {
 }
 
 export function CreateComment({ onCreate }) {
+    const { user } = useContext(UserContext);
     const { gameId } = useParams();
     const [comment, setComment] = useState(initialComment);
 
@@ -15,8 +17,8 @@ export function CreateComment({ onCreate }) {
         setComment((comment) => ({
             ...comment,
             [e.target.name]: e.target.value,
-            gameId: gameId, 
-            author: ''
+            gameId: gameId,
+            author: user.email
         }))
     }
 
@@ -39,8 +41,8 @@ export function CreateComment({ onCreate }) {
                         body: JSON.stringify(comment)
                     });
 
-                    setComment(initialComment);
-                    onCreate();
+                setComment(initialComment);
+                onCreate();
 
             } catch (err) {
                 throw new Error(err.message);
