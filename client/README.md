@@ -54,3 +54,9 @@
 - [x] Using useFetch Hook In Games Details
 - [x] Extending the useFetch Hook Functionality With The Ability To Refresh The State
 - [x] Using useFetch Hook In Games Comments
+- [x] Update React to the latest version
+- [x] Add a new server
+- [x] Create useForm Hook
+- [] Using useForm in registration
+- [] Using useForm in login
+- [] Create UserContext
