@@ -1,25 +1,40 @@
+import { useContext } from "react";
 import { BASE_URL } from "../../utils/endpoints.js";
+import UserContext from "../../contexts/UserContext.jsx";
 
 export function useRequest() {
-    const request = async (url, method, data) => {
-        let opttions = {}
+    const { user, isAuthenticated } = useContext(UserContext);
+
+    const request = async (url, method, data, config = {}) => {
+        let options = {}
 
         if (method) {
-            opttions.method = method;
+            options.method = method;
         }
 
         if (data) {
-            opttions.headers = {
-                'content-type': 'aplication/json',
+            options.headers = {
+                'content-type': 'application/json',
             }
 
-            opttions.body = JSON.stringify(data);
+            options.body = JSON.stringify(data);
         }
 
-        const res = await fetch(`${BASE_URL}${url}`, opttions);
+        if (config.accessToken || isAuthenticated) {
+            options.headers = {
+                ...options.headers,
+                'X-Authorization': config.accessToken || user.accessToken,
+            }
+        }
+
+        const res = await fetch(`${BASE_URL}${url}`, options);
 
         if (!res.ok) {
             throw res.statusText;
+        }
+
+        if (res.status === 204) {
+            return {};
         }
 
         const result = await res.json();

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { NavLink } from "react-router";
-import { UserContext } from "../../contexts/UserContext.js";
+import UserContext from "../../contexts/UserContext.jsx";
 
 export function Header() {
     const { isAuthenticated } = useContext(UserContext);
@@ -11,14 +11,14 @@ export function Header() {
                 <NavLink className={'home'} to="/"> <img src="/images/logo.png" alt="logo" /> </NavLink>
                 <NavLink to="/games/catalog">Catalog</NavLink>
                 {!isAuthenticated
-                    ? <div id="guest">
+                    ? (<div id="guest">
                         <NavLink to="/users/login">Login</NavLink>
                         <NavLink to="/users/register">Register</NavLink>
-                    </div>
-                    : <div id="user">
+                    </div>)
+                    : (<div id="user">
                         <NavLink to="/games/create">Add Game</NavLink>
-                        <NavLink to="/user/logout">Logout</NavLink>
-                    </div>
+                        <NavLink to="/users/logout">Logout</NavLink>
+                    </div>)
                 }
             </nav>
         </header>

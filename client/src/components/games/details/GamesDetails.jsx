@@ -4,7 +4,7 @@ import { endPoints } from "../../../utils/endpoints.js";
 import { CreateComment } from "../create-comment/CreateComment.jsx";
 import { DetailsComments } from "../details-comments/DetailsComments.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
-import { UserContext } from "../../../contexts/UserContext.js";
+import UserContext from "../../../contexts/UserContext.jsx";
 
 export function GamesDetails() {
     const { user, isAuthenticated } = useContext(UserContext);

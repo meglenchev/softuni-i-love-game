@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { useNavigate } from "react-router"
 import { endPoints } from "../../utils/endpoints.js"
-import { UserContext } from "../../contexts/UserContext.js"
+import UserContext from "../../contexts/UserContext.jsx"
 import { useForm } from "../hooks/useForm.js"
 import { useRequest } from "../hooks/useRequest.js"
 

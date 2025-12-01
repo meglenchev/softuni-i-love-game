@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { endPoints } from "../../../utils/endpoints.js";
 import { useParams } from "react-router";
-import { UserContext } from "../../../contexts/UserContext.js";
+import UserContext from "../../../contexts/UserContext.jsx";
 
 const initialComment = {
     gameId: '',

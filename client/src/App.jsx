@@ -8,34 +8,14 @@ import { GamesCatalog } from "./components/games/catalog/GamesCatalog.jsx"
 import { GamesDetails } from "./components/games/details/GamesDetails.jsx"
 import { GamesCreate } from "./components/games/create-game/GamesCreate.jsx"
 import { GamesEdit } from "./components/games/edit/GamesEdit.jsx"
-import { useState } from "react"
-import { UserContext } from "./contexts/UserContext.js"
 import { Logout } from "./components/users/Logout.jsx"
 
 export function App() {
-	const [user, setUser] = useState({});
-
-	const loginHandler = (user) => {
-		setUser(user);
-	};
-
-	const logOutHandler = () => {
-		setUser({});
-	};
-
-	const contextValue = {
-		user,
-		isAuthenticated: !!user?.accessToken,
-		onLogin: loginHandler,
-		onLogout: logOutHandler
-	}
-
 	return (
-		<UserContext.Provider value={contextValue}>
+		<>
 			<Header />
 			<Routes>
 				<Route path='/' element={<Home />} />
-
 				<Route path='/games/catalog' element={<GamesCatalog />} />
 				<Route path='/games/:gameId/details' element={<GamesDetails />} />
 				<Route path='/games/create' element={<GamesCreate />} />
@@ -47,6 +27,6 @@ export function App() {
 				<Route path="/users/logout" element={<Logout />} />
 			</Routes>
 			<Footer />
-		</UserContext.Provider>
+		</>
 	)
 }
