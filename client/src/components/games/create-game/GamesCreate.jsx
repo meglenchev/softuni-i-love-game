@@ -1,9 +1,8 @@
 import { validate } from "../utils/createGameValidation.js";
-import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
+import { endPoints } from "../../../utils/endpoints.js";
 import { useNavigate } from "react-router";
 import { useForm } from "../../hooks/useForm.js";
-import { useContext } from "react";
-import UserContext from "../../../contexts/UserContext.jsx";
+import { useRequest } from "../../hooks/useRequest.js";
 
 let initialGameData = {
     title: '',
@@ -16,7 +15,7 @@ let initialGameData = {
 
 export function GamesCreate() {
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const { request } = useRequest();
 
     const submitGameHandler = async (formValues) => {
         const errors = validate(formValues);
@@ -29,23 +28,25 @@ export function GamesCreate() {
 
         formValues._createdOn = Date.now();
 
-        (async () => {
-            try {
-                await fetch(
-                    `${BASE_URL}${endPoints.postGame}`,
-                    {
-                        method: 'post',
-                        headers: {
-                            'Content-type': 'application/json', 
-                            'X-Authorization': user.accessToken,
-                        },
-                        body: JSON.stringify(formValues)
-                    });
+        await request(endPoints.postGame, 'POST', formValues)
+        
+        // (async () => {
+        //     try {
+        //         await fetch(
+        //             `${BASE_URL}${endPoints.postGame}`,
+        //             {
+        //                 method: 'post',
+        //                 headers: {
+        //                     'Content-type': 'application/json', 
+        //                     'X-Authorization': user.accessToken,
+        //                 },
+        //                 body: JSON.stringify(formValues)
+        //             });
 
-            } catch (err) {
-                alert(err.message);
-            }
-        })();
+        //     } catch (err) {
+        //         alert(err.message);
+        //     }
+        // })();
 
         navigate('/');
     }
