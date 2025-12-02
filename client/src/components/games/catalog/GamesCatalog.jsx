@@ -15,8 +15,8 @@ export function GamesCatalog() {
                 : allGames.length > 0 ? (
                     <div className="catalog-container">
                         {allGames.map(game => <Games
-                            key={game.at(0)}
-                            id={game.at(0)}
+                            key={game.at(1)._id}
+                            id={game.at(1)._id}
                             imageUrl={game.at(1).imageUrl}
                             title={game.at(1).title}
                             genre={game.at(1).genre}

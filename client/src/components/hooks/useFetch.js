@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../../utils/endpoints.js";
 
 export function useFetch(url, initialState, gameId, refresh) {
     const [data, setData] = useState(initialState);
@@ -7,7 +8,7 @@ export function useFetch(url, initialState, gameId, refresh) {
     useEffect(() => {
         const abortController = new AbortController();
 
-        fetch(url, { signal: abortController.signal })
+        fetch(`${BASE_URL}${url}`, { signal: abortController.signal })
             .then(res => {
                 if (!res.ok) {
                     throw new Error(res.text);

@@ -1,4 +1,4 @@
-import { endPoints } from "../../../utils/endpoints.js";
+import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { useParams } from "react-router";
 import { useFetch } from "../../hooks/useFetch.js";
 

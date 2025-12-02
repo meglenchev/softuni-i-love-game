@@ -1,7 +1,9 @@
-import { useState } from "react";
 import { validate } from "../utils/createGameValidation.js";
-import { endPoints } from "../../../utils/endpoints.js";
+import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { useNavigate } from "react-router";
+import { useForm } from "../../hooks/useForm.js";
+import { useContext } from "react";
+import UserContext from "../../../contexts/UserContext.jsx";
 
 let initialGameData = {
     title: '',
@@ -14,19 +16,10 @@ let initialGameData = {
 
 export function GamesCreate() {
     const navigate = useNavigate();
-    const [game, setGame] = useState(initialGameData);
+    const { user } = useContext(UserContext);
 
-    const createGameDataHandler = (e) => {
-        setGame((game) => ({
-            ...game,
-            [e.target.name]: e.target.value
-        }))
-    }
-
-    const submitGameHandler = async (e) => {
-        e.preventDefault();
-
-        const errors = validate(game);
+    const submitGameHandler = async (formValues) => {
+        const errors = validate(formValues);
 
         if (Object.keys(errors).length > 0) {
             const errorsMessage = Object.values(errors);
@@ -34,33 +27,34 @@ export function GamesCreate() {
             return alert(errorsMessage.at(0));;
         }
 
-        game._createdOn = Date.now();
+        formValues._createdOn = Date.now();
 
         (async () => {
             try {
                 await fetch(
-                    endPoints.allGames,
+                    `${BASE_URL}${endPoints.postGame}`,
                     {
                         method: 'post',
                         headers: {
-                            'Content-type': 'application/json'
+                            'Content-type': 'application/json', 
+                            'X-Authorization': user.accessToken,
                         },
-                        body: JSON.stringify(game)
+                        body: JSON.stringify(formValues)
                     });
 
             } catch (err) {
-                throw new Error(err.message);
+                alert(err.message);
             }
         })();
-
-        setGame(initialGameData);
 
         navigate('/');
     }
 
+    const { propertiesRegister, formAction } = useForm(submitGameHandler, initialGameData);
+
     return (
         <section id="add-page">
-            <form id="add-new-game" onSubmit={submitGameHandler}>
+            <form id="add-new-game" action={formAction}>
                 <div className="container">
 
                     <h1>Add New Game</h1>
@@ -70,9 +64,7 @@ export function GamesCreate() {
                         <input
                             type="text"
                             id="gameName"
-                            name="title"
-                            value={game.title}
-                            onChange={createGameDataHandler}
+                            {...propertiesRegister('title')}
                             placeholder="Enter game title..."
                         />
                     </div>
@@ -82,9 +74,7 @@ export function GamesCreate() {
                         <input
                             type="text"
                             id="genre"
-                            name="genre"
-                            value={game.genre}
-                            onChange={createGameDataHandler}
+                            {...propertiesRegister('genre')}
                             placeholder="Enter game genre..."
                         />
                     </div>
@@ -94,9 +84,7 @@ export function GamesCreate() {
                         <input
                             type="number"
                             id="activePlayers"
-                            name="players"
-                            value={game.players}
-                            onChange={createGameDataHandler}
+                            {...propertiesRegister('players')}
                             min="0"
                             placeholder="0"
                         />
@@ -107,9 +95,7 @@ export function GamesCreate() {
                         <input
                             type="date"
                             id="releaseDate"
-                            name="date"
-                            value={game.date}
-                            onChange={createGameDataHandler}
+                            {...propertiesRegister('date')}
                         />
                     </div>
 
@@ -118,9 +104,7 @@ export function GamesCreate() {
                         <input
                             type="text"
                             id="imageUrl"
-                            name="imageUrl"
-                            value={game.imageUrl}
-                            onChange={createGameDataHandler}
+                            {...propertiesRegister('imageUrl')}
                             placeholder="Enter image URL..."
                         />
                     </div>
@@ -128,9 +112,7 @@ export function GamesCreate() {
                     <div className="form-group-full">
                         <label htmlFor="summary">Summary:</label>
                         <textarea
-                            name="summary"
-                            value={game.summary}
-                            onChange={createGameDataHandler}
+                            {...propertiesRegister('summary')}
                             id="summary"
                             rows="5"
                             placeholder="Write a brief summary..."

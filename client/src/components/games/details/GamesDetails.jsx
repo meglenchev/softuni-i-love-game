@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { NavLink, useNavigate, useParams } from "react-router";
-import { endPoints } from "../../../utils/endpoints.js";
+import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { CreateComment } from "../create-comment/CreateComment.jsx";
 import { DetailsComments } from "../details-comments/DetailsComments.jsx";
 import { useFetch } from "../../hooks/useFetch.js";
@@ -23,8 +23,11 @@ export function GamesDetails() {
         }
 
         try {
-            await fetch(endPoints.details(gameId), {
+            await fetch(`${BASE_URL}${endPoints.details(gameId)}`, {
                 method: 'DELETE',
+                headers: {
+                    'X-Authorization': user.accessToken,
+                },
             });
 
             navigate('/');
@@ -77,7 +80,7 @@ export function GamesDetails() {
                 <DetailsComments refresh={refresh} />
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            { isAuthenticated && <CreateComment onCreate={refreshHandler} />}
+            {isAuthenticated && <CreateComment onCreate={refreshHandler} />}
         </section>
 
     )

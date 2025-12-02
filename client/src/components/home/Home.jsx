@@ -5,7 +5,8 @@ import { useFetch } from "../hooks/useFetch.js";
 export function Home() {
     const { data, isPanding } = useFetch(endPoints.allGames, {})
 
-    const gameData = Object.entries(data).sort((a, b) => b[1]._createdOn - a[1]._createdOn).slice(0, 3);
+    //const gameData = Object.entries(data).sort((a, b) => b[1]._createdOn - a[1]._createdOn).slice(0, 3);
+    const gameData = Object.entries(data).slice(0, 3);
 
     return (
         <section id="welcome-world">
@@ -24,8 +25,8 @@ export function Home() {
                             ? <h3 className="no-articles" style={{ color: 'white' }}>Loading...</h3>
                             : gameData.length > 0 
                                 ? (gameData.map(game => <Games
-                                    key={game.at(0)}
-                                    id={game.at(0)}
+                                    key={game.at(1)._id}
+                                    id={game.at(1)._id}
                                     imageUrl={game.at(1).imageUrl}
                                     title={game.at(1).title}
                                     genre={game.at(1).genre}

@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router";
-import { endPoints } from "../../../utils/endpoints.js";
+import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { validate } from "../utils/createGameValidation.js";
+import UserContext from "../../../contexts/UserContext.jsx";
 
 let initialGameData = {
     title: '',
@@ -16,13 +17,14 @@ export function GamesEdit() {
     const navigate = useNavigate();
     const [game, setGame] = useState(initialGameData);
     const { gameId } = useParams();
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         const abortController = new AbortController();
 
         (async () => {
             try {
-                const res = await fetch(endPoints.details(gameId), { signal: abortController.signal });
+                const res = await fetch(`${BASE_URL}${endPoints.details(gameId)}`, { signal: abortController.signal });
 
                 const gameData = await res.json();
 
@@ -58,19 +60,18 @@ export function GamesEdit() {
         (async () => {
             try {
                 const res = await fetch(
-                    endPoints.details(gameId),
+                    `${BASE_URL}${endPoints.details(gameId)}`,
                     {
                         method: 'PUT',
                         headers: {
                             'Content-type': 'application/json',
+                            'X-Authorization': user.accessToken,
                         },
                         body: JSON.stringify(game)
                     }
                 );
 
-                const response = await res.json();
-
-                console.log(response)
+                await res.json();
 
             } catch (err) {
                 throw new Error(err.message);

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { endPoints } from "../../../utils/endpoints.js";
+import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { useParams } from "react-router";
 import UserContext from "../../../contexts/UserContext.jsx";
 
@@ -32,11 +32,12 @@ export function CreateComment({ onCreate }) {
         (async () => {
             try {
                 await fetch(
-                    endPoints.addComment,
+                    `${BASE_URL}${endPoints.addComment}`,
                     {
                         method: 'post',
                         headers: {
-                            'Content-type': 'application/json'
+                            'Content-type': 'application/json', 
+                            'X-Authorization': user.accessToken,
                         },
                         body: JSON.stringify(comment)
                     });
