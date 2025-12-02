@@ -29,24 +29,6 @@ export function GamesCreate() {
         formValues._createdOn = Date.now();
 
         await request(endPoints.postGame, 'POST', formValues)
-        
-        // (async () => {
-        //     try {
-        //         await fetch(
-        //             `${BASE_URL}${endPoints.postGame}`,
-        //             {
-        //                 method: 'post',
-        //                 headers: {
-        //                     'Content-type': 'application/json', 
-        //                     'X-Authorization': user.accessToken,
-        //                 },
-        //                 body: JSON.stringify(formValues)
-        //             });
-
-        //     } catch (err) {
-        //         alert(err.message);
-        //     }
-        // })();
 
         navigate('/');
     }

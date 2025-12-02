@@ -63,3 +63,4 @@
 - [x] Create useRequest Hook
 - [x] Game editing should use usеForm hook
 - [x] Refactoring game creation to work with useRequest hook
+- [x] Refactoring edit game to work with useRequest hook

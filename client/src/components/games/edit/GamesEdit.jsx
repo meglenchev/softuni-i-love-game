@@ -4,6 +4,7 @@ import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { validate } from "../utils/createGameValidation.js";
 import UserContext from "../../../contexts/UserContext.jsx";
 import { useForm } from "../../hooks/useForm.js";
+import { useRequest } from "../../hooks/useRequest.js";
 
 let initialGameData = {
     title: '',
@@ -15,7 +16,11 @@ let initialGameData = {
 }
 
 export function GamesEdit() {
+    const { request } = useRequest();
+
     const navigate = useNavigate();
+
+    const { gameId } = useParams();
 
     const submitEditGameHandler = async (formValues) => {
 
@@ -27,35 +32,12 @@ export function GamesEdit() {
             return alert(errorsMessage.at(0));;
         }
 
-
-        (async () => {
-            try {
-                const res = await fetch(
-                    `${BASE_URL}${endPoints.details(gameId)}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Content-type': 'application/json',
-                            'X-Authorization': user.accessToken,
-                        },
-                        body: JSON.stringify(formValues)
-                    }
-                );
-
-                await res.json();
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        })();
+        await request(endPoints.details(gameId), 'PUT', formValues)
 
         navigate(`/games/${gameId}/details`);
     }
 
     const { propertiesRegister, formAction, setFormValues } = useForm(submitEditGameHandler, initialGameData);
-
-    const { gameId } = useParams();
-    const { user } = useContext(UserContext);
 
     useEffect(() => {
         const abortController = new AbortController();
