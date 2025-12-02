@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { useNavigate, useParams } from "react-router";
 import { BASE_URL, endPoints } from "../../../utils/endpoints.js";
 import { validate } from "../utils/createGameValidation.js";
 import UserContext from "../../../contexts/UserContext.jsx";
+import { useForm } from "../../hooks/useForm.js";
 
 let initialGameData = {
     title: '',
@@ -15,7 +16,44 @@ let initialGameData = {
 
 export function GamesEdit() {
     const navigate = useNavigate();
-    const [game, setGame] = useState(initialGameData);
+
+    const submitEditGameHandler = async (formValues) => {
+
+        const errors = validate(formValues);
+
+        if (Object.keys(errors).length > 0) {
+            const errorsMessage = Object.values(errors);
+
+            return alert(errorsMessage.at(0));;
+        }
+
+
+        (async () => {
+            try {
+                const res = await fetch(
+                    `${BASE_URL}${endPoints.details(gameId)}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'X-Authorization': user.accessToken,
+                        },
+                        body: JSON.stringify(formValues)
+                    }
+                );
+
+                await res.json();
+
+            } catch (err) {
+                throw new Error(err.message);
+            }
+        })();
+
+        navigate(`/games/${gameId}/details`);
+    }
+
+    const { propertiesRegister, formAction, setFormValues } = useForm(submitEditGameHandler, initialGameData);
+
     const { gameId } = useParams();
     const { user } = useContext(UserContext);
 
@@ -28,7 +66,7 @@ export function GamesEdit() {
 
                 const gameData = await res.json();
 
-                setGame(gameData);
+                setFormValues(gameData);
             } catch (err) {
                 throw new Error(err.message);
             }
@@ -37,55 +75,11 @@ export function GamesEdit() {
         return () => {
             abortController.abort();
         }
-    }, [gameId])
-
-    const editGameDataHandler = (e) => {
-        setGame((game) => ({
-            ...game,
-            [e.target.name]: e.target.value
-        }))
-    }
-
-    const submitEditGameHandler = async (e) => {
-        e.preventDefault();
-
-        if (Object.keys(validate(game)).length > 0) {
-            const errorsMessage = Object.values(validate(game));
-
-            alert(errorsMessage.at(0));
-
-            return;
-        }
-
-        (async () => {
-            try {
-                const res = await fetch(
-                    `${BASE_URL}${endPoints.details(gameId)}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Content-type': 'application/json',
-                            'X-Authorization': user.accessToken,
-                        },
-                        body: JSON.stringify(game)
-                    }
-                );
-
-                await res.json();
-
-            } catch (err) {
-                throw new Error(err.message);
-            }
-        })();
-
-        setGame(initialGameData);
-
-        navigate(`/games/${gameId}/details`);
-    }
+    }, [gameId, setFormValues])
 
     return (
         <section id="edit-page">
-            <form id="add-new-game" onSubmit={submitEditGameHandler}>
+            <form id="add-new-game" action={formAction}>
                 <div className="container">
                     <h1>Edit Game</h1>
                     <div className="form-group-half">
@@ -93,9 +87,7 @@ export function GamesEdit() {
                         <input
                             type="text"
                             id="gameName"
-                            name="title"
-                            value={game.title}
-                            onChange={editGameDataHandler}
+                            {...propertiesRegister('title')}
                             placeholder="Enter game title..."
                         />
                     </div>
@@ -104,9 +96,7 @@ export function GamesEdit() {
                         <input
                             type="text"
                             id="genre"
-                            name="genre"
-                            value={game.genre}
-                            onChange={editGameDataHandler}
+                            {...propertiesRegister('genre')}
                             placeholder="Enter game genre..."
                         />
                     </div>
@@ -115,9 +105,7 @@ export function GamesEdit() {
                         <input
                             type="number"
                             id="activePlayers"
-                            name="players"
-                            value={game.players}
-                            onChange={editGameDataHandler}
+                            {...propertiesRegister('players')}
                             min={0}
                             placeholder={0}
                         />
@@ -127,9 +115,7 @@ export function GamesEdit() {
                         <input
                             type="date"
                             id="releaseDate"
-                            name="date"
-                            value={game.date}
-                            onChange={editGameDataHandler}
+                            {...propertiesRegister('date')}
                         />
                     </div>
                     <div className="form-group-full">
@@ -137,9 +123,7 @@ export function GamesEdit() {
                         <input
                             type="text"
                             id="imageUrl"
-                            name="imageUrl"
-                            value={game.imageUrl}
-                            onChange={editGameDataHandler}
+                            {...propertiesRegister('imageUrl')}
                             placeholder="Enter image URL..."
                         />
                     </div>
@@ -147,9 +131,7 @@ export function GamesEdit() {
                         <label htmlFor="summary">Summary:</label>
                         <textarea
                             id="summary"
-                            name="summary"
-                            value={game.summary}
-                            onChange={editGameDataHandler}
+                            {...propertiesRegister('summary')}
                             rows={5}
                             placeholder="Write a brief summary..."
                         />

@@ -61,3 +61,4 @@
 - [x] Using useForm in login
 - [x] Create UserContext
 - [x] Create useRequest Hook
+- [x] Game editing should use usеForm hook
